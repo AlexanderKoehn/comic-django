@@ -6,22 +6,15 @@
         <meta http-equiv='Content-Type' content='text/html; charset=utf-8'>
         <meta name="description" content="The COMIC framework enables you to view and download medical image data, upload your own data and apply validated image processing algorithms." />
         <meta name="keywords" content="COMIC, open, science, medical, image, computing, validated" />
+
+        <script src="{% get_static_prefix %}js/requirejs/require.js"></script>
+        <script src="{% get_static_prefix %}js/require-config.js"></script>
+
         <link href="{% get_static_prefix %}css/base.css" type="text/css" rel="stylesheet">
-            
-        <script type="text/javascript" src="{% get_static_prefix %}js/google-analytics-tracking.js"></script>
-        <script type="text/javascript" src="{% get_static_prefix %}js/jquery/jquery-1.9.1.min.js"></script>        
-        <script type="text/javascript" src="{% get_static_prefix %}js/jqueryui/js/jquery-ui-1.10.1.custom.min.js"></script>
-        <script type="text/javascript" src="{% get_static_prefix %}js/jquery.cookie.js"></script>
-        <script type="text/javascript" src="{% get_static_prefix %}js/MeVisLab/Private/Sources/Web/application/js/gui/Application.js"></script>
-        <script type="text/javascript" src="{% get_static_prefix %}js/DIAG/Application/Modules/Macros/COMICWorkstation/web/js/COMICWebWorkstationWrapper.js"></script>
-        <!--For displaying jquery UI widgets -->
-        <link type="text/css" href="{% get_static_prefix %}css/jqueryUI/smoothness/jquery-ui-1.8.21.custom.css" rel="Stylesheet" />        
+        <link href="{% get_static_prefix %}css/default.css" type="text/css" rel="stylesheet">
+        <link type="text/css" href="{% get_static_prefix %}css/jqueryUI/smoothness/jquery-ui-1.8.21.custom.css" rel="Stylesheet" />
         <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
-        <!--Adds sorting and other features to html tables -->
-        <script type="text/javascript" language="javascript" src="{% get_static_prefix %}js/jquery.dataTables.js"></script>    
-        
         <link href="{% get_static_prefix %}img/grand-challenge.ico" rel="shortcut icon">
-        
         <link href="{% get_static_prefix %}css/smoothness/jquery-ui-1.10.2.custom.css" rel="stylesheet">
         
         <!--Put any site or page specific css here -->
@@ -29,29 +22,30 @@
     
         <script>
         //url prefix for API functions
-            API_PREFIX = "{% get_project_prefix %}api",
-            
-        $(document).ready(function() {
-            
-            // delete message on click
-            $(document).on('click','.del-msg',function(){                
-                $('.messagelist').attr('style', 'display:none;');
-            });
-            // messages timeout  
-            setTimeout(function() {
-                $('.messagelist').fadeOut('slow');
-            }, 5000); // <-- time in milliseconds, 1000 =  1 sec
-                       
-            $('table.sortable').dataTable({
-                            "bJQueryUI": true,
-                            "sPaginationType": "full_numbers",
-                            "bPaginate": false,
-                            "bLengthChange": false,
-                            "bFilter": false,
-                            "bInfo": false,
-                            "bAutoWidth": false
-                       });
-        });
+        API_PREFIX = "{% get_project_prefix %}api"
+
+        require(['jquery', 'jqueryui', 'jquerycookie', 'jquerydatatables'],
+            function ($) {
+                // delete message on click
+                $(document).on('click','.del-msg',function(){
+                    $('.messagelist').attr('style', 'display:none;');
+                });
+                var FIVE_SECONDS = 5000;
+                setTimeout(function() {
+                    $('.messagelist').fadeOut('slow');
+                }, FIVE_SECONDS);
+
+                $('table.sortable').dataTable({
+                                "bJQueryUI": true,
+                                "sPaginationType": "full_numbers",
+                                "bPaginate": false,
+                                "bLengthChange": false,
+                                "bFilter": false,
+                                "bInfo": false,
+                                "bAutoWidth": false
+                           });
+            }
+        );
         </script>
         
         <style>
